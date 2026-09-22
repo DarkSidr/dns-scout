@@ -6,6 +6,7 @@ Usage: build-release.py --arch arm64 --openwrt-arch aarch64_cortex-a53 --apk /pa
 import argparse
 import hashlib
 import io
+import json
 import os
 from pathlib import Path
 import shutil
@@ -21,10 +22,10 @@ p.add_argument('--go', default='go')
 a=p.parse_args()
 root=Path(__file__).resolve().parents[1]
 out=root/'dist';out.mkdir(exist_ok=True)
-version='0.1.0-r3'
+version=(root/'VERSION').read_text().strip()+'-r'+(root/'RELEASE').read_text().strip()
 env=dict(os.environ, CGO_ENABLED='0', GOOS='linux', GOARCH=a.arch, GOMIPS='softfloat', GOARM='7', GOCACHE=os.environ.get('GOCACHE','/tmp/dns-go-cache'))
 binary=out/f'dns-scout-{a.arch}'
-subprocess.run([a.go,'build','-buildvcs=false','-trimpath','-ldflags=-s -w','-o',str(binary),'./cmd/dns-scout'],cwd=root,env=env,check=True)
+subprocess.run([a.go,'build','-buildvcs=false','-trimpath','-ldflags=-s -w -X main.version='+version,'-o',str(binary),'./cmd/dns-scout'],cwd=root,env=env,check=True)
 with tempfile.TemporaryDirectory(prefix='dns-scout-package-') as tmp:
     stage=Path(tmp)/'data';shutil.copytree(root/'files',stage)
     (stage/'usr/sbin').mkdir(parents=True,exist_ok=True)
@@ -65,4 +66,10 @@ with tempfile.TemporaryDirectory(prefix='dns-scout-package-') as tmp:
         for path in [stage,*stage.rglob('*')]:
             os.chown(path,0,0)
         subprocess.run([a.apk,'mkpkg','--info','name:luci-app-dns-scout','--info',f'version:{version}','--info',f'arch:{a.openwrt_arch}','--info','description:DoH benchmarking and verified selection for LuCI','--info','license:MIT','--info','depends:luci-base rpcd ca-bundle https-dns-proxy','--files',str(stage),'--script','post-install:'+str(root/'scripts/postinst'),'--script','post-upgrade:'+str(root/'scripts/postinst'),'--script','pre-deinstall:'+str(root/'scripts/prerm'),'--output',str(out/f'luci-app-dns-scout-{version}.{a.openwrt_arch}.apk')],check=True)
-print('Built',a.openwrt_arch)
+(out/'release.json').write_text(json.dumps({"version":version},indent=2)+'\n')
+checks=[]
+for file in sorted(out.iterdir()):
+    if file.name=='release.json' or (file.suffix in ('.apk','.ipk') and version in file.name):
+        checks.append(hashlib.sha256(file.read_bytes()).hexdigest()+'  '+file.name)
+(out/'SHA256SUMS').write_text('\n'.join(checks)+'\n')
+print('Built',version,a.openwrt_arch)

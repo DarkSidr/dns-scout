@@ -26,15 +26,17 @@ type Server struct {
 	Eligible bool   `json:"eligible"`
 }
 type Config struct {
-	Servers   []Server `json:"servers"`
-	Bootstrap []string `json:"bootstrap"`
-	Domains   []string `json:"domains"`
-	Samples   int      `json:"samples"`
-	Timeout   int      `json:"timeout"`
-	Parallel  int      `json:"parallel"`
-	Daily     string   `json:"daily"`
-	Auto      bool     `json:"auto"`
-	Fallbacks int      `json:"fallbacks"`
+	Servers      []Server `json:"servers"`
+	Bootstrap    []string `json:"bootstrap"`
+	Domains      []string `json:"domains"`
+	Samples      int      `json:"samples"`
+	Timeout      int      `json:"timeout"`
+	Parallel     int      `json:"parallel"`
+	Daily        string   `json:"daily"`
+	Auto         bool     `json:"auto"`
+	Fallbacks    int      `json:"fallbacks"`
+	FallbackMode string   `json:"fallback_mode"`
+	FallbackIDs  []string `json:"fallback_ids"`
 }
 
 func readJSON(path string, out any) error {
@@ -137,6 +139,31 @@ func (c Config) validate() error {
 	}
 	if c.Samples < 2 || c.Samples > 10 || c.Timeout < 2 || c.Timeout > 15 || c.Parallel < 1 || c.Parallel > 8 || c.Fallbacks < 1 || c.Fallbacks > 3 {
 		return fmt.Errorf("выход за пределы параметров теста")
+	}
+	if c.FallbackMode != "" && c.FallbackMode != "auto" && c.FallbackMode != "manual" {
+		return fmt.Errorf("неизвестный режим резервирования")
+	}
+	if len(c.FallbackIDs) > 2 {
+		return fmt.Errorf("можно выбрать не более двух резервных DNS")
+	}
+	if c.FallbackMode == "manual" {
+		seen := map[string]bool{}
+		for _, id := range c.FallbackIDs {
+			found := false
+			for _, server := range c.Servers {
+				if server.ID == id && server.Enabled && server.Eligible {
+					if seen[server.URL] {
+						return fmt.Errorf("резервные DNS должны иметь разные адреса")
+					}
+					seen[server.URL] = true
+					found = true
+					break
+				}
+			}
+			if !found {
+				return fmt.Errorf("резерв %s: включите тестирование и разрешите выбор сервера", id)
+			}
+		}
 	}
 	if len(c.Domains) < 2 || len(c.Domains) > 8 {
 		return fmt.Errorf("укажите 2–8 тестовых доменов")

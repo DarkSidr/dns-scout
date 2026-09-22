@@ -248,3 +248,60 @@ func TestFallbackAvoidsKnownProviderAliases(t *testing.T) {
 		t.Fatal(ss, e)
 	}
 }
+
+func TestManualFallbackSelection(t *testing.T) {
+	c := fixture(t)
+	c.FallbackMode = "manual"
+	c.FallbackIDs = []string{"google", "controld"}
+	r := Report{Finished: time.Now().Unix()}
+	for _, id := range []string{"google", "cloudflare", "controld", "quad9"} {
+		for _, s := range c.Servers {
+			if s.ID == id {
+				r.Results = append(r.Results, Result{Server: s, Success: 3, Total: 3})
+			}
+		}
+	}
+	if e := c.validate(); e != nil {
+		t.Fatal(e)
+	}
+	ss, e := candidates(r, c, "quad9")
+	if e != nil || len(ss) != 3 || ss[0].ID != "quad9" || ss[1].ID != "google" || ss[2].ID != "controld" {
+		t.Fatal(ss, e)
+	}
+	ss, e = candidates(r, c, "")
+	if e != nil || ss[0].ID != "cloudflare" {
+		t.Fatal("automatic primary reused reserved DNS", ss, e)
+	}
+	if _, e = candidates(r, c, "google"); e == nil {
+		t.Fatal("primary/reserve collision accepted")
+	}
+	r.Results[0].Success = 2
+	if _, e = candidates(r, c, "quad9"); e == nil {
+		t.Fatal("failed pinned reserve silently replaced")
+	}
+	c.FallbackIDs = nil
+	ss, e = candidates(r, c, "quad9")
+	if e != nil || len(ss) != 1 {
+		t.Fatal("manual no-reserve mode", ss, e)
+	}
+}
+func TestManualFallbackConfigValidation(t *testing.T) {
+	for _, ids := range [][]string{{"google", "google"}, {"missing"}, {"google", "controld", "quad9"}, {"adguard_filter"}} {
+		c := fixture(t)
+		c.FallbackMode = "manual"
+		c.FallbackIDs = ids
+		if c.validate() == nil {
+			t.Fatalf("accepted invalid backups %v", ids)
+		}
+	}
+	c := fixture(t)
+	c.FallbackMode = "unknown"
+	if c.validate() == nil {
+		t.Fatal("unknown mode")
+	}
+	// Old saved configurations have no new fields and must retain automatic mode.
+	c = fixture(t)
+	if e := c.validate(); e != nil {
+		t.Fatal(e)
+	}
+}

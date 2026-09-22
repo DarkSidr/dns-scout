@@ -14,6 +14,8 @@ import (
 	"time"
 )
 
+var version = "dev"
+
 func freePort() (int, error) {
 	c, e := net.ListenPacket("udp4", "127.0.0.1:0")
 	if e != nil {
@@ -144,7 +146,7 @@ func rpc(method string) {
 		var active any
 		readJSON("/etc/dns-scout/active.json", &active)
 		_, pending := os.Stat(backupDir + "/pending")
-		emit(map[string]any{"config": c, "report": r, "job": j, "active": active, "pending_recovery": pending == nil})
+		emit(map[string]any{"version": version, "config": c, "report": r, "job": j, "active": active, "pending_recovery": pending == nil})
 	case "save":
 		f, e := lock()
 		if e != nil {
@@ -194,10 +196,13 @@ func main() {
 	debug.SetGCPercent(50)
 	debug.SetMemoryLimit(20 << 20)
 	if len(os.Args) < 2 {
-		fmt.Println("dns-scout 0.1.0: scan | scheduled | preflight | recover | sync-cron | rpc list/call")
+		fmt.Println("dns-scout " + version + ": version | scan | scheduled | preflight | recover | sync-cron | rpc list/call")
 		return
 	}
 	switch os.Args[1] {
+	case "version", "--version":
+		fmt.Println(version)
+		return
 	case "rpc":
 		if len(os.Args) == 3 && os.Args[2] == "list" {
 			fmt.Println(`{"status":{},"scan":{},"apply":{"id":""},"save":{"config":""},"recover":{}}`)

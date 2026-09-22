@@ -165,6 +165,38 @@ func candidates(r Report, c Config, id string) ([]Server, error) {
 			}
 		}
 	}
+	if c.FallbackMode == "manual" {
+		backups := []Server{}
+		reserved := map[string]bool{}
+		for _, bid := range c.FallbackIDs {
+			found := false
+			for _, s := range eligible {
+				if s.ID == bid {
+					backups = append(backups, s)
+					reserved[s.URL] = true
+					found = true
+					break
+				}
+			}
+			if !found {
+				return nil, fmt.Errorf("резерв %s не прошёл все тесты: настройки не изменены", bid)
+			}
+		}
+		for _, s := range eligible {
+			if id != "" && s.ID != id {
+				continue
+			}
+			if reserved[s.URL] {
+				if id != "" {
+					return nil, fmt.Errorf("основной DNS совпадает с выбранным резервным")
+				}
+				continue
+			}
+			return append([]Server{s}, backups...), nil
+		}
+		return nil, fmt.Errorf("нет проверенного основного DNS, отличного от выбранных резервных")
+	}
+
 	if id != "" {
 		found := -1
 		for i, s := range eligible {

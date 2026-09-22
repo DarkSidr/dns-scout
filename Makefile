@@ -1,8 +1,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dns-scout
-PKG_VERSION:=0.1.0
-PKG_RELEASE:=3
+PKG_VERSION:=$(shell cat $(CURDIR)/VERSION)
+PKG_RELEASE:=$(shell cat $(CURDIR)/RELEASE)
 PKG_LICENSE:=MIT
 PKG_MAINTAINER:=DNS Scout contributors
 PKG_BUILD_DEPENDS:=golang/host
@@ -11,6 +11,7 @@ PKG_BUILD_FLAGS:=no-mips16
 GO_PKG:=dns-scout
 GO_PKG_BUILD_PKG:=dns-scout/cmd/dns-scout
 GO_PKG_LDFLAGS:=-s -w
+GO_PKG_LDFLAGS_X:=main.version=$(PKG_VERSION)-r$(PKG_RELEASE)
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk

@@ -30,16 +30,37 @@ function table(headers, rows) {
 return view.extend({
  load: function() { return status().then(checked); },
  render: function(data) {
-  var self = this, config = data.config;
+  var config = data.config, latest = data, reservesDirty = false;
   var summary = E('div'), results = E('div'), bootstrapResults = E('div');
   var run = button('Запустить тест', function() { return scan().then(checked).then(refresh); });
   var best = button('Применить лучший + резерв', function() { return confirmApply(''); });
+  var reserveMode = E('select', {'class':'cbi-input-select', id:'dns-scout-fallback-mode'}, [E('option',{value:'auto'},'Автоматически по рейтингу'),E('option',{value:'manual'},'Выбрать вручную')]);
+  reserveMode.value = config.fallback_mode || 'auto';
+  var reserveOne = E('select', {'class':'cbi-input-select', id:'dns-scout-reserve-1'}), reserveTwo = E('select', {'class':'cbi-input-select', id:'dns-scout-reserve-2'});
+  function reserveOptions(c) {
+   [reserveOne,reserveTwo].forEach(function(select,i) {
+    select.replaceChildren(E('option',{value:''},'Не использовать'));
+    c.servers.filter(function(s){return s.enabled && s.eligible;}).forEach(function(s){select.appendChild(E('option',{value:s.id},s.name+' — '+s.url));});
+    select.value = (c.fallback_ids || [])[i] || '';
+   });
+  }
+  reserveOptions(config);
+  function reserveValues() {
+   if(reserveMode.value==='manual' && !reserveOne.value && reserveTwo.value) throw new Error('Сначала выберите первый резервный DNS.');
+   return {fallback_mode:reserveMode.value, fallback_ids:reserveMode.value==='manual' ? [reserveOne.value,reserveTwo.value].filter(Boolean) : [], fallbacks:+fallbacks.value};
+  }
   function confirmApply(id) {
-   ui.showModal('Применение DNS', [E('p', {}, 'Будут заменены DoH-инстансы https-dns-proxy и общие DNS-серверы dnsmasq. Правила отдельных доменов сохранятся. Порядок резервирования — по результатам последнего теста. При ошибке выполняется откат.'),
+   if(reservesDirty) throw new Error('Сначала нажмите «Сохранить резервирование».');
+   var c=latest.config;
+   var reserveText=(c.fallback_mode==='manual') ? ((c.fallback_ids || []).map(function(bid){var s=c.servers.find(function(s){return s.id===bid;});return s?s.name:bid;}).join(' → ') || 'без резервных DNS') : 'автоматически по рейтингу (всего до '+c.fallbacks+' DNS)';
+
+   ui.showModal('Применение DNS', [E('p', {}, 'Будут заменены DoH-инстансы https-dns-proxy и общие DNS-серверы dnsmasq. Правила отдельных доменов сохранятся. Резервные серверы используются в сохранённом порядке. При ошибке выполняется откат.'),
+    E('p', {}, 'Резервирование: '+reserveText),
     E('p', {}, 'Перед применением сохраните настройки ниже. Возможен краткий перерыв DNS во время перезапуска.'),
     E('div', { 'class': 'right' }, [button('Отмена', function() { ui.hideModal(); }), ' ', button('Применить', function() { ui.hideModal(); return apply(id).then(checked).then(refresh); })])]);
   }
   function update(d) {
+   latest=d;
    var busy = d.job && d.job.running, report = d.report;
    run.disabled = !!busy; best.disabled = !!busy || !report || !report.finished || Date.now()/1000-report.finished>3600;
    var children = [E('p', {}, (d.job.message || 'Готов к проверке') + (busy ? ' · ' + d.job.done + '/' + d.job.total : ''))];
@@ -66,11 +87,18 @@ return view.extend({
    editors.push(row);serverBody.appendChild(row.node);
   }
   config.servers.forEach(add);
+  var reserveManual = E('div',{},[field('Первый резервный DNS',reserveOne),field('Второй резервный DNS',reserveTwo)]);
+  var reserveAuto = field('Всего DNS в цепочке',fallbacks,'1–3: основной и резервные. Этот предел используется в автоматическом режиме.');
+  function reserveVisibility(){reserveManual.hidden=reserveMode.value!=='manual';reserveAuto.hidden=reserveMode.value==='manual';}
+  [reserveMode,reserveOne,reserveTwo,fallbacks].forEach(function(el){el.addEventListener('change',function(){reservesDirty=true;reserveVisibility();});});
+  reserveVisibility();
+  var reservePanel=E('div',{'class':'cbi-section'},[E('h3',{},'Резервные DNS'),field('Режим выбора',reserveMode),reserveAuto,reserveManual,
+   E('p',{},'Основной DNS выбирается кнопкой «Применить» в таблице. В ручном режиме используются только выбранные здесь резервы. Они должны пройти все тесты; совпадение с основным сервером не допускается.'),
+   button('Сохранить резервирование',function(){var next=Object.assign({},latest.config,reserveValues());return save(JSON.stringify(next)).then(checked).then(function(){reservesDirty=false;ui.addNotification(null,E('p',{},'Резервирование сохранено.'));return refresh();});})]);
   var settings=E('div', { 'class': 'cbi-section' }, [E('h3', {}, 'Настройки'),
    field('Bootstrap DNS',boot,'Публичные IPv4 через запятую. Нужны только для поиска IP DoH-сервера; запросы к ним не зашифрованы. Проверяются в указанном порядке.'),
    field('Тестовые домены',domains,'Минимум два существующих домена с публичной A-записью. Запросы будут видны выбранным DNS-провайдерам.'),
    field('Запросов на сервер',samples),field('Таймаут, секунд',timeout),field('Параллельных проверок',parallel,'Для слабого роутера: 1. Каждая проба включает bootstrap, новое TLS-соединение и DNS-запрос.'),
-   field('Всего DNS в цепочке',fallbacks,'1–3: основной и резервные. dnsmasq strict-order: переход при сбое, а не балансировка.'),
    field('Ежедневный тест',daily,'ЧЧ:ММ по времени роутера; пусто — расписание выключено. Используется cron.'),
    field('Автовыбор после теста по расписанию',auto,'Применяются только разрешённые серверы со 100% успешных проб. При отсутствии подходящих настройки не меняются.'),
    E('h3',{},'Каталог серверов'), E('p',{},'Дополнительные адреса из gist выключены: список старый, доступность и владельцы могли измениться.'), button('Включить все для теста',function(){editors.forEach(function(r){r.enabled.checked=true;});}), ' ', button('Выключить дополнительные из gist',function(){editors.forEach(function(r){if(r.id.indexOf("gist_")===0)r.enabled.checked=false;});}), E('p',{},'«Тестировать» включает проверку. «Разрешить выбор» разрешает ручное и автоматическое применение. Проверяйте политику фильтрации и доверие к провайдеру самостоятельно.'),
@@ -79,10 +107,11 @@ return view.extend({
    button('Сохранить настройки',function(){
     var next={bootstrap:boot.value.split(/[ ,]+/).filter(Boolean),domains:domains.value.split(/[ ,]+/).filter(Boolean),samples:+samples.value,timeout:+timeout.value,parallel:+parallel.value,daily:daily.value.trim(),auto:auto.checked,fallbacks:+fallbacks.value,
      servers:editors.map(function(r){return {id:r.id,name:r.name.value.trim(),protocol:'doh',url:r.url.value.trim(),enabled:r.enabled.checked,eligible:r.eligible.checked};})};
-    return save(JSON.stringify(next)).then(checked).then(function(){ui.addNotification(null,E('p',{},'Настройки сохранены.'));return refresh();});
+    Object.assign(next,reserveValues());
+    return save(JSON.stringify(next)).then(checked).then(function(){reservesDirty=false;reserveOptions(next);ui.addNotification(null,E('p',{},'Настройки сохранены.'));return refresh();});
    })]);
   update(data);poll.add(function(){return refresh().catch(error);},10);
-  return E('div', {}, [E('h2', {}, 'DNS Scout'), E('p', {}, 'Проверка доступности DoH с этого роутера. Рейтинг: доля успешных ответов, затем p95 задержки. Скорость не является оценкой приватности. Результаты исчезают после перезагрузки.'),summary,E('div',{'class':'cbi-section'},[run,' ',best]),results,E('h3',{},'Bootstrap DNS'),bootstrapResults,settings]);
+  return E('div', {}, [E('h2', {}, 'DNS Scout '+(data.version || '')),  E('p', {}, 'Проверка доступности DoH с этого роутера. Рейтинг: доля успешных ответов, затем p95 задержки. Скорость не является оценкой приватности. Результаты исчезают после перезагрузки.'),summary,E('div',{'class':'cbi-section'},[run,' ',best]),reservePanel,results,E('h3',{},'Bootstrap DNS'),bootstrapResults,settings]);
  },
  handleSaveApply:null,handleSave:null,handleReset:null
 });
