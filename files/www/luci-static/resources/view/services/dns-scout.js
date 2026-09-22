@@ -89,7 +89,7 @@ return view.extend({
   config.servers.forEach(add);
   var reserveManual = E('div',{},[field('Первый резервный DNS',reserveOne),field('Второй резервный DNS',reserveTwo)]);
   var reserveAuto = field('Всего DNS в цепочке',fallbacks,'1–3: основной и резервные. Этот предел используется в автоматическом режиме.');
-  function reserveVisibility(){reserveManual.hidden=reserveMode.value!=='manual';reserveAuto.hidden=reserveMode.value==='manual';}
+  function reserveVisibility(){reserveManual.style.display=reserveMode.value==='manual'?'':'none';reserveAuto.style.display=reserveMode.value==='manual'?'none':'';}
   [reserveMode,reserveOne,reserveTwo,fallbacks].forEach(function(el){el.addEventListener('change',function(){reservesDirty=true;reserveVisibility();});});
   reserveVisibility();
   var reservePanel=E('div',{'class':'cbi-section'},[E('h3',{},'Резервные DNS'),field('Режим выбора',reserveMode),reserveAuto,reserveManual,

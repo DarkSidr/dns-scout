@@ -33,7 +33,7 @@ wget -O /tmp/dns-scout-install.sh https://raw.githubusercontent.com/DarkSidr/dns
 
 ```sh
 # Конкретная версия:
-sh /tmp/dns-scout-install.sh --version 0.2.0-r1
+sh /tmp/dns-scout-install.sh --version 0.2.0-r2
 # Только загрузить/проверить, не устанавливать:
 sh /tmp/dns-scout-install.sh --dry-run
 # Без доступа к GitHub: каталог с release.json, SHA256SUMS и нужным пакетом:
@@ -46,10 +46,10 @@ sh install.sh --local-dir /tmp/dns-scout-release
 
 ```sh
 # OpenWrt 25.12 (APK), например Banana Pi BPI-R4:
-apk add --allow-untrusted /tmp/luci-app-dns-scout-0.2.0-r1.aarch64_cortex-a53.apk
+apk add --allow-untrusted /tmp/luci-app-dns-scout-0.2.0-r2.aarch64_cortex-a53.apk
 
 # OpenWrt 23.05 / 24.10 (OPKG):
-opkg install /tmp/luci-app-dns-scout_0.2.0-r1_aarch64_cortex-a53.ipk
+opkg install /tmp/luci-app-dns-scout_0.2.0-r2_aarch64_cortex-a53.ipk
 ```
 
 `--allow-untrusted` нужен для локально собранного неподписанного APK. Проверяйте SHA256 из `dist/SHA256SUMS` и устанавливайте только собственную доверенную сборку. Для публичного репозитория нужен собственный ключ подписи.
@@ -164,15 +164,15 @@ dns-scout recover
 
 ## Версии и выпуск релиза
 
-`VERSION` содержит версию приложения (например, `0.2.0`), `RELEASE` — номер сборки OpenWrt (`1`). Итоговая версия — `0.2.0-r1`; она автоматически попадает в имя пакета, бинарник и `release.json`. Посмотреть установленную версию: `dns-scout version` или заголовок LuCI.
+`VERSION` содержит версию приложения (например, `0.2.0`), `RELEASE` — номер сборки OpenWrt (`2`). Итоговая версия — `0.2.0-r2`; она автоматически попадает в имя пакета, бинарник и `release.json`. Посмотреть установленную версию: `dns-scout version` или заголовок LuCI.
 
 Исходники хранятся в Git; бинарники, локальные сетевые отчёты и снимки интерфейса исключены из истории. Для нового релиза обновите VERSION/RELEASE, CHANGELOG и файл `docs/releases/<версия>-r<сборка>.md`, затем:
 
 ```sh
 git add .
-git commit -m "Release 0.2.0-r1"
-git tag -a v0.2.0-r1 -m "DNS Scout 0.2.0-r1"
-git push origin main v0.2.0-r1
+git commit -m "Release 0.2.0-r2"
+git tag -a v0.2.0-r2 -m "DNS Scout 0.2.0-r2"
+git push origin main v0.2.0-r2
 ```
 
 GitHub Actions запускает тесты, собирает пять архитектур в APK/IPK и публикует файлы релиза вместе с SHA256SUMS. Для этого достаточно стандартного GITHUB_TOKEN workflow с правом contents:write; персональный токен в исходниках не нужен. На обычный push/PR запускаются только проверки.
