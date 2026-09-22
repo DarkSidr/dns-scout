@@ -1,0 +1,916 @@
+{
+  "servers": [
+    {
+      "id": "quad9",
+      "name": "Quad9 — защита от угроз",
+      "protocol": "doh",
+      "url": "https://dns.quad9.net/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "quad9_ip",
+      "name": "Quad9 — по IP",
+      "protocol": "doh",
+      "url": "https://9.9.9.9/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "quad9_plain",
+      "name": "Quad9 — без блокировки угроз",
+      "protocol": "doh",
+      "url": "https://dns10.quad9.net/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare",
+      "protocol": "doh",
+      "url": "https://cloudflare-dns.com/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "cloudflare_ip",
+      "name": "Cloudflare — по IP",
+      "protocol": "doh",
+      "url": "https://1.1.1.1/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "google",
+      "name": "Google",
+      "protocol": "doh",
+      "url": "https://dns.google/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "controld",
+      "name": "Control D — без фильтрации",
+      "protocol": "doh",
+      "url": "https://freedns.controld.com/p0",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "adguard",
+      "name": "AdGuard — без фильтрации",
+      "protocol": "doh",
+      "url": "https://unfiltered.adguard-dns.com/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "adguard_filter",
+      "name": "AdGuard — блокировка рекламы",
+      "protocol": "doh",
+      "url": "https://dns.adguard-dns.com/dns-query",
+      "enabled": true,
+      "eligible": false
+    },
+    {
+      "id": "dnssb",
+      "name": "DNS.SB",
+      "protocol": "doh",
+      "url": "https://doh.dns.sb/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "nic",
+      "name": "CZ.NIC",
+      "protocol": "doh",
+      "url": "https://odvr.nic.cz/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "digitale",
+      "name": "Digitale Gesellschaft",
+      "protocol": "doh",
+      "url": "https://dns.digitale-gesellschaft.ch/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "applied",
+      "name": "Applied Privacy",
+      "protocol": "doh",
+      "url": "https://doh.applied-privacy.net/query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "dnshome",
+      "name": "DNSHome",
+      "protocol": "doh",
+      "url": "https://dns.dnshome.de/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "dnsforge",
+      "name": "DNSForge — фильтрация",
+      "protocol": "doh",
+      "url": "https://dnsforge.de/dns-query",
+      "enabled": true,
+      "eligible": false
+    },
+    {
+      "id": "opendns",
+      "name": "OpenDNS",
+      "protocol": "doh",
+      "url": "https://doh.opendns.com/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "alidns",
+      "name": "Alibaba DNS",
+      "protocol": "doh",
+      "url": "https://dns.alidns.com/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "quad101",
+      "name": "Quad101",
+      "protocol": "doh",
+      "url": "https://dns.twnic.tw/dns-query",
+      "enabled": true,
+      "eligible": true
+    },
+    {
+      "id": "gist_4b16840f4a95",
+      "name": "dns-nyc.aaflalo.me (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns-nyc.aaflalo.me/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_d1fbda71e95f",
+      "name": "dns.adguard.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.adguard.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_30f789e03a21",
+      "name": "dns-family.adguard.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns-family.adguard.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_e70ca0e02a59",
+      "name": "uk.adhole.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://uk.adhole.org/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_d9623f39eb73",
+      "name": "de.adhole.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://de.adhole.org/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_370105022087",
+      "name": "sg.adhole.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://sg.adhole.org/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_973a30ab246f",
+      "name": "us-central.adhole.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://us-central.adhole.org/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_b1d0c000259b",
+      "name": "us-east.adhole.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://us-east.adhole.org/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_ec7fff631466",
+      "name": "doh.nl.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.nl.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_dfffea45904f",
+      "name": "doh.in.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.in.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_23aa58fc4123",
+      "name": "doh.la.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.la.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_122dc25f52db",
+      "name": "doh.ny.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.ny.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_0dd58f476378",
+      "name": "doh.pl.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.pl.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_c9ab250b1949",
+      "name": "doh.it.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.it.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_a3f5ab7138f5",
+      "name": "doh.es.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.es.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_474ebc51c107",
+      "name": "doh.no.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.no.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_27c1e507b42f",
+      "name": "doh.chi.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.chi.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_13cc1800c183",
+      "name": "doh.au.ahadns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.au.ahadns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_5a7cf20d792e",
+      "name": "dns.aa.net.uk (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.aa.net.uk/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_7d8e4d435c98",
+      "name": "dnses.alekberg.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dnses.alekberg.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_3319a16c2095",
+      "name": "dnsnl.alekberg.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dnsnl.alekberg.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_91fbdaf27316",
+      "name": "dnsse.alekberg.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dnsse.alekberg.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_305812f952d4",
+      "name": "dns.arapurayil.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.arapurayil.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_aa2c35695ff2",
+      "name": "doh.42l.fr (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.42l.fr/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_e57022d4050c",
+      "name": "dns.doh.my.id (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.doh.my.id/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_28a0d1348c54",
+      "name": "doh-ch.blahdns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh-ch.blahdns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_d37379ed9110",
+      "name": "doh-sg.blahdns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh-sg.blahdns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_46259deac5b2",
+      "name": "doh-fi.blahdns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh-fi.blahdns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_f823f766839a",
+      "name": "doh-jp.blahdns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh-jp.blahdns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_00bd276e1aa0",
+      "name": "doh-de.blahdns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh-de.blahdns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_a9e1eb66b382",
+      "name": "dns.blokada.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.blokada.org/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_e8c90548cd4a",
+      "name": "doh-01.spectrum.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh-01.spectrum.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_20c3c26c88f3",
+      "name": "doh-02.spectrum.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh-02.spectrum.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_98e0f17b0b61",
+      "name": "private.canadianshield.cira.ca (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://private.canadianshield.cira.ca/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_bdc77da24ca7",
+      "name": "protected.canadianshield.cira.ca (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://protected.canadianshield.cira.ca/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_6858e81051bf",
+      "name": "family.canadianshield.cira.ca (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://family.canadianshield.cira.ca/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_09b9ff5762c0",
+      "name": "doh.familyshield.opendns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.familyshield.opendns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_cc619eca71be",
+      "name": "doh.cleanbrowsing.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.cleanbrowsing.org/doh/family-filter/",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_7e78fadac684",
+      "name": "mozilla.cloudflare-dns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://mozilla.cloudflare-dns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_5cf6e60d73e7",
+      "name": "security.cloudflare-dns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://security.cloudflare-dns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_bad5856c7f17",
+      "name": "family.cloudflare-dns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://family.cloudflare-dns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_ec1a0e9d333d",
+      "name": "dns64.cloudflare-dns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns64.cloudflare-dns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_7b334bc65c13",
+      "name": "doh.xfinity.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.xfinity.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_42c8df0dcf2e",
+      "name": "freedns.controld.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://freedns.controld.com/p1",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_1d81f96fbad0",
+      "name": "freedns.controld.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://freedns.controld.com/p2",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_367da9f4eaca",
+      "name": "freedns.controld.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://freedns.controld.com/p3",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_7f34e617bc0b",
+      "name": "dns.flatuslifir.is (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.flatuslifir.is/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_268945c29c7b",
+      "name": "doh.dnslify.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.dnslify.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_6984c28a404b",
+      "name": "doh.li (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.li/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_98c936e21686",
+      "name": "doh.asia.dnswarden.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.asia.dnswarden.com/adblock",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_00b9106e39ca",
+      "name": "doh.asia.dnswarden.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.asia.dnswarden.com/uncensored",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_ea82eea2dae8",
+      "name": "doh.asia.dnswarden.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.asia.dnswarden.com/adultfilter",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_2fcae1ed92f9",
+      "name": "doh.eu.dnswarden.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.eu.dnswarden.com/adblock",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_57848189b9bc",
+      "name": "doh.eu.dnswarden.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.eu.dnswarden.com/uncensored",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_157cae06bc46",
+      "name": "doh.eu.dnswarden.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.eu.dnswarden.com/adultfilter",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_7b5af7908fa3",
+      "name": "doh.us.dnswarden.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.us.dnswarden.com/adblock",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_e2e7a1570891",
+      "name": "doh.us.dnswarden.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.us.dnswarden.com/uncensored",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_8b09480f73ec",
+      "name": "doh.us.dnswarden.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.us.dnswarden.com/adultfilter",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_e170de053146",
+      "name": "dns.edgy.network (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.edgy.network/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_1f628d7c2195",
+      "name": "dnscache.e-utp.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dnscache.e-utp.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_abb2f0ed67d6",
+      "name": "doh.ffmuc.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.ffmuc.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_239c6fcd6c60",
+      "name": "dns64.dns.google (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns64.dns.google/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_cc29932bfc5c",
+      "name": "dns.hostux.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.hostux.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_147549ef1d31",
+      "name": "ordns.he.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://ordns.he.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_12d106c6e93a",
+      "name": "jit.ddns.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://jit.ddns.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_b60a651fafd7",
+      "name": "jp.tiar.app (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://jp.tiar.app/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_6d223a7a9487",
+      "name": "jp.tiarap.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://jp.tiarap.org/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_beb545e81a4a",
+      "name": "eu1.dns.lavate.ch (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://eu1.dns.lavate.ch/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_d45e5485ac29",
+      "name": "doh.libredns.gr (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.libredns.gr/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_dfcdbc71cc7d",
+      "name": "doh.mullvad.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.mullvad.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_f657bfe615aa",
+      "name": "adblock.doh.mullvad.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://adblock.doh.mullvad.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_a65fb8293fc1",
+      "name": "dns.moulticast.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.moulticast.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_38c3a349e84a",
+      "name": "dns.dns-over-https.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.dns-over-https.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_6b9ce1ffc8f2",
+      "name": "doh.post-factum.tk (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.post-factum.tk/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_46574765484d",
+      "name": "hydra.plan9-ns1.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://hydra.plan9-ns1.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_c57f3fd97891",
+      "name": "draco.plan9-ns2.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://draco.plan9-ns2.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_32dede6a9cd5",
+      "name": "dns9.quad9.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns9.quad9.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_1710c13b6199",
+      "name": "dns11.quad9.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns11.quad9.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_c97ab183203e",
+      "name": "basic.rethinkdns.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://basic.rethinkdns.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_95ca63e50148",
+      "name": "dns.rubyfish.cn (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.rubyfish.cn/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_13f756eedec0",
+      "name": "fi.doh.dns.snopyta.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://fi.doh.dns.snopyta.org/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_9c539428f79c",
+      "name": "dns.switch.ch (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.switch.ch/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_91045084d97c",
+      "name": "doh.tiar.app (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.tiar.app/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_e01dc253a932",
+      "name": "doh.tiarap.org (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.tiarap.org/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_a0bc88fcb079",
+      "name": "doh.this.web.id (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.this.web.id/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_04f47a38f9c0",
+      "name": "adfree.usableprivacy.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://adfree.usableprivacy.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_ffa1acdbd925",
+      "name": "dns.wevpn.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns.wevpn.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_3985b1d3aa63",
+      "name": "dns-weblock.wevpn.com (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://dns-weblock.wevpn.com/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_1e25b89cb2c2",
+      "name": "doh.crypto.sx (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.crypto.sx/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_c1046319ca8d",
+      "name": "freedom.mydns.network (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://freedom.mydns.network/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_1e6cfc126569",
+      "name": "adblock.mydns.network (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://adblock.mydns.network/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_57a150af69c2",
+      "name": "ibuki.cgnat.net (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://ibuki.cgnat.net/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_3c43d2765de0",
+      "name": "doh-2.seby.io (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh-2.seby.io/dns-query",
+      "enabled": false,
+      "eligible": false
+    },
+    {
+      "id": "gist_2996f20bb2f7",
+      "name": "doh.seby.io:8443 (gist, не проверен)",
+      "protocol": "doh",
+      "url": "https://doh.seby.io:8443/dns-query",
+      "enabled": false,
+      "eligible": false
+    }
+  ],
+  "bootstrap": [
+    "77.88.8.8",
+    "9.9.9.9",
+    "1.1.1.1"
+  ],
+  "domains": [
+    "example.com",
+    "openwrt.org",
+    "iana.org"
+  ],
+  "samples": 3,
+  "timeout": 5,
+  "parallel": 1,
+  "daily": "",
+  "auto": false,
+  "fallbacks": 2
+}

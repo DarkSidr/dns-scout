@@ -1,0 +1,8 @@
+{
+ "admin/services/dns-scout": {
+  "title": "DNS Scout",
+  "order": 60,
+  "action": { "type": "view", "path": "services/dns-scout" },
+  "depends": { "acl": ["luci-app-dns-scout"] }
+ }
+}

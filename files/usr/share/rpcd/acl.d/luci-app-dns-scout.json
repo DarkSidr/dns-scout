@@ -1,0 +1,7 @@
+{
+ "luci-app-dns-scout": {
+  "description": "Test public DoH resolvers and manage https-dns-proxy",
+  "read": { "ubus": { "dns-scout": ["status"] } },
+  "write": { "ubus": { "dns-scout": ["scan", "apply", "save", "recover"] } }
+ }
+}

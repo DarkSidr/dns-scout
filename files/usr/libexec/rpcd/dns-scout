@@ -1,0 +1,3 @@
+#!/bin/sh
+export GOMEMLIMIT=20MiB GOGC=50
+exec /usr/sbin/dns-scout rpc "$@"

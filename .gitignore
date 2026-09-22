@@ -1,0 +1,8 @@
+/dist/
+__pycache__/
+*.pyc
+/docs/router-*.json
+/docs/luci-*.png
+.env
+.env.*
+*.key

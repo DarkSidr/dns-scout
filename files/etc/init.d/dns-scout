@@ -1,0 +1,9 @@
+#!/bin/sh /etc/rc.common
+START=95
+STOP=10
+start() {
+    # Recover interrupted transactions, including power loss. No resident daemon.
+    GOMEMLIMIT=20MiB GOGC=50 /usr/sbin/dns-scout recover
+    /usr/sbin/dns-scout sync-cron
+}
+stop() { :; }

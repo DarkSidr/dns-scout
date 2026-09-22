@@ -1,0 +1,13 @@
+#!/bin/sh
+[ -n "$IPKG_INSTROOT" ] && exit 0
+# Refuse removal while a configuration transaction needs recovery.
+if [ -f /etc/dns-scout/transaction/pending ]; then
+    echo 'DNS Scout: recover the pending transaction before uninstalling.' >&2
+    exit 1
+fi
+/etc/init.d/dns-scout disable
+if [ -f /etc/crontabs/root ]; then
+    sed -i '/ # dns-scout$/d' /etc/crontabs/root
+    /etc/init.d/cron restart
+fi
+exit 0

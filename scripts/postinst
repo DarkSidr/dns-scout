@@ -1,0 +1,5 @@
+#!/bin/sh
+[ -n "$IPKG_INSTROOT" ] && exit 0
+/etc/init.d/dns-scout enable
+/etc/init.d/rpcd restart
+exit 0
