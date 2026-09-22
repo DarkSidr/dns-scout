@@ -196,10 +196,38 @@ func main() {
 	debug.SetGCPercent(50)
 	debug.SetMemoryLimit(20 << 20)
 	if len(os.Args) < 2 {
-		fmt.Println("dns-scout " + version + ": version | scan | scheduled | preflight | recover | sync-cron | rpc list/call")
+		fmt.Println("dns-scout " + version + ": version | scan | scheduled | preflight | recover | sync-cron | uninstall | rpc list/call")
 		return
 	}
 	switch os.Args[1] {
+	case "uninstall":
+		if len(os.Args) != 2 {
+			fmt.Println("dns-scout uninstall — удалить пакет, cron и данные DNS Scout; сохранить рабочий DNS")
+			return
+		}
+		if os.Geteuid() != 0 {
+			fail(fmt.Errorf("удаление требует root"))
+			os.Exit(1)
+		}
+		f, e := lock()
+		if e != nil {
+			fail(e)
+			os.Exit(1)
+		}
+		defer unlock(f)
+		manager, e := exec.LookPath("apk")
+		if e != nil {
+			manager, e = exec.LookPath("opkg")
+		}
+		if e == nil {
+			e = uninstall(manager, "/etc/dns-scout", stateDir, "/etc/crontabs/root")
+		}
+		if e != nil {
+			fail(e)
+			os.Exit(1)
+		}
+		fmt.Println("DNS Scout удалён: пакет, расписание, настройки и результаты. Рабочие DNS сохранены в https-dns-proxy.")
+		return
 	case "version", "--version":
 		fmt.Println(version)
 		return

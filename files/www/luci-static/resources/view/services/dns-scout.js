@@ -101,7 +101,12 @@ return view.extend({
    field('Запросов на сервер',samples),field('Таймаут, секунд',timeout),field('Параллельных проверок',parallel,'Для слабого роутера: 1. Каждая проба включает bootstrap, новое TLS-соединение и DNS-запрос.'),
    field('Ежедневный тест',daily,'ЧЧ:ММ по времени роутера; пусто — расписание выключено. Используется cron.'),
    field('Автовыбор после теста по расписанию',auto,'Применяются только разрешённые серверы со 100% успешных проб. При отсутствии подходящих настройки не меняются.'),
-   E('h3',{},'Каталог серверов'), E('p',{},'Дополнительные адреса из gist выключены: список старый, доступность и владельцы могли измениться.'), button('Включить все для теста',function(){editors.forEach(function(r){r.enabled.checked=true;});}), ' ', button('Выключить дополнительные из gist',function(){editors.forEach(function(r){if(r.id.indexOf("gist_")===0)r.enabled.checked=false;});}), E('p',{},'«Тестировать» включает проверку. «Разрешить выбор» разрешает ручное и автоматическое применение. Проверяйте политику фильтрации и доверие к провайдеру самостоятельно.'),
+   E('h3',{},'Каталог серверов'), E('p',{},'Дополнительные адреса из gist по умолчанию выключены. Подпись «не проверен» относится к исходному списку; текущую доступность показывает результат теста.'),
+   button('Тестировать все',function(){editors.forEach(function(r){r.enabled.checked=true;});}), ' ',
+   button('Разрешить выбор всем',function(){editors.forEach(function(r){r.eligible.checked=true;});}), ' ',
+   button('Тестировать и разрешить всех',function(){editors.forEach(function(r){r.enabled.checked=true;r.eligible.checked=true;});}), ' ',
+   button('Выключить дополнительные из gist',function(){editors.forEach(function(r){if(r.id.indexOf("gist_")===0)r.enabled.checked=false;});}),
+   E('p',{},'После массового выбора нажмите «Сохранить настройки», затем «Запустить тест». Для применения сервер должен успешно пройти все пробы. «Разрешить выбор» допускает сервер к ручному и автоматическому выбору, включая резервы.'),
    E('div',{'class':'table-responsive'},E('table',{'class':'table'},[E('thead',{},E('tr',{'class':'tr'},['Название','DoH URL','Тестировать','Разрешить выбор',''].map(function(s){return E('th',{'class':'th'},s);}))),serverBody])),
    button('Добавить сервер',function(){add({id:'custom_'+Date.now().toString(36),name:'',url:'https://',enabled:true,eligible:false});}), ' ',
    button('Сохранить настройки',function(){

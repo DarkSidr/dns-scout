@@ -18,6 +18,7 @@ jobs:
       - run: go test -race ./...
       - run: go vet ./...
       - run: node --check files/www/luci-static/resources/view/services/dns-scout.js
+      - run: node scripts/test-ui.cjs
       - run: sh -n install.sh scripts/build-all.sh
       - run: python3 -m py_compile scripts/build-release.py scripts/import-gist.py
   release:
